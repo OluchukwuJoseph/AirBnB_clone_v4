@@ -11,7 +11,7 @@ $(document).ready(function () {
 		$(".amenities h4").text(Object.values(amenities).sort().join(", "));
 	});
 
-  $.get('http://0.0.0.0:5001/api/v1/status/', (data, textStatus) => {
+  $.get('http://localhost:5001/api/v1/status/', (data, textStatus) => {
     if (data['status'] === 'OK') {
       $('div#api_status').addClass('available');
     } else {
@@ -19,10 +19,25 @@ $(document).ready(function () {
     }
   });
 
-	// Create and populate places
+	// Create and populate Place Objects
+	populate_places({});
+
+	// Create and populate Place objects having all Amenity ids checked
+	$('section.filters button').bind("click", () => {
+		populate_places({'amenities': Object.keys(amenities)});
+	});
+});
+
+
+/**
+ * This function creates and populates Place Objects with content
+ * @param {String} search_query: Optional dictionary, Keys can either be
+ * states, cities, amenities. Values are list of keys ID's.
+ */
+function populate_places(search_query) {
 	$.post({
-		url: 'http://0.0.0.0:5001/api/v1/places_search',
-		data: JSON.stringify({}),
+		url: 'http://localhost:5001/api/v1/places_search',
+		data: JSON.stringify(search_query),
 		headers: {"Content-Type": "application/json"},
 		success: (data) => {
 			data.forEach((place) => {
@@ -38,7 +53,7 @@ $(document).ready(function () {
 					</div>
 				</article>`);
 				// Get user information and append to place
-				$.get(`http://0.0.0.0:5001/api/v1/users/${place.user_id}`, (data, textStatus) => {
+				$.get(`http://localhost:5001/api/v1/users/${place.user_id}`, (data, textStatus) => {
 					item.append(`<div class="user">
 						<b>Owner:</b> ${data.first_name} ${data.last_name}
 					</div>
@@ -50,4 +65,4 @@ $(document).ready(function () {
 		},
 		dataType: "json"
 	});
-});
+}
