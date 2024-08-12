@@ -11,7 +11,7 @@ $(document).ready(function () {
 		$(".amenities h4").text(Object.values(amenities).sort().join(", "));
 	});
 
-  $.get('http:///0.0.0.0:5001/api/v1/status/', (data, textStatus) => {
+  $.get('http://0.0.0.0:5001/api/v1/status/', (data, textStatus) => {
     if (data['status'] === 'OK') {
       $('div#api_status').addClass('available');
     } else {
