@@ -1,4 +1,4 @@
-// // This script makes the filter section dynamic
+// This script makes the filter section dynamic
 
 $(document).ready(function () {
 	const amenities = {};

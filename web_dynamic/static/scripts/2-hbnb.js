@@ -1,4 +1,4 @@
-// // This script makes the filter section dynamic and check api status
+// This script makes the filter section dynamic and check api status
 
 $(document).ready(function () {
 	const amenities = {};
